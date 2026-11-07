@@ -3,7 +3,7 @@ name: Generate Daily Weather Report
 on:
   workflow_dispatch: # Keeps the manual run button
   schedule:
-    - cron: '0 11 * * *' # Runs automatically every day at 11:00 AM UTC (6:00 AM EST)
+    - cron: '0 11 * * *' # Runs automatically every day at 11:00 AM UTC
 
 jobs:
   build-report:
@@ -23,14 +23,12 @@ jobs:
         run: pip install requests
 
       - name: Run weather script
-        env:
-          TZ: "America/Detroit"
         run: python3 Weather_Report.py
 
       - name: Commit and push updated report
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add index.html
+          git add Weather_Report.html
           git commit -m "Auto-update weather report [skip ci]" || echo "No changes to commit"
           git push
