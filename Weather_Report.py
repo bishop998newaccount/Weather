@@ -3,42 +3,42 @@ import time
 import os
 from datetime import datetime
 
-# Your list of cities updated with direct map links for road conditions/traffic
+# Your list of cities updated with direct map links and NWS station IDs for current observations
 locations = [
     {
-        "city": "Marquette, MI", "lat": 46.54, "lon": -87.40,
+        "city": "Marquette, MI", "lat": 46.54, "lon": -87.40, "station": "KMQT",
         "map_link": "https://www.google.com/maps/@46.54,-87.40,11z/data=!5m1!1e1"
     },
     {
-        "city": "Gaylord, MI", "lat": 45.03, "lon": -84.68,
+        "city": "Gaylord, MI", "lat": 45.03, "lon": -84.68, "station": "KGLR",
         "map_link": "https://www.google.com/maps/@45.03,-84.68,11z/data=!5m1!1e1"
     },
     {
-        "city": "Grand Rapids, MI", "lat": 42.96, "lon": -85.67,
+        "city": "Grand Rapids, MI", "lat": 42.96, "lon": -85.67, "station": "KGRR",
         "map_link": "https://www.google.com/maps/@42.96,-85.67,11z/data=!5m1!1e1"
     },
     {
-        "city": "Cass City, MI", "lat": 43.60, "lon": -83.17,
+        "city": "Cass City, MI", "lat": 43.60, "lon": -83.17, "station": "KBAX",
         "map_link": "https://www.google.com/maps/@43.60,-83.17,11z/data=!5m1!1e1"
     },
     {
-        "city": "Lansing, MI", "lat": 42.73, "lon": -84.55,
+        "city": "Lansing, MI", "lat": 42.73, "lon": -84.55, "station": "KLAN",
         "map_link": "https://www.google.com/maps/@42.73,-84.55,11z/data=!5m1!1e1"
     },
     {
-        "city": "Benton Harbor, MI", "lat": 42.12, "lon": -86.45,
+        "city": "Benton Harbor, MI", "lat": 42.12, "lon": -86.45, "station": "KBEH",
         "map_link": "https://www.google.com/maps/@42.12,-86.45,11z/data=!5m1!1e1"
     },
     {
-        "city": "Detroit, MI", "lat": 42.33, "lon": -83.05,
+        "city": "Detroit, MI", "lat": 42.33, "lon": -83.05, "station": "KDTW",
         "map_link": "https://www.google.com/maps/@42.33,-83.05,11z/data=!5m1!1e1"
     },
     {
-        "city": "Des Moines, IA", "lat": 41.59, "lon": -93.60,
+        "city": "Des Moines, IA", "lat": 41.59, "lon": -93.60, "station": "KDSM",
         "map_link": "https://www.google.com/maps/@41.59,-93.60,11z/data=!5m1!1e1"
     },
     {
-        "city": "Cedar Rapids, IA", "lat": 41.98, "lon": -91.67,
+        "city": "Cedar Rapids, IA", "lat": 41.98, "lon": -91.67, "station": "KCID",
         "map_link": "https://www.google.com/maps/@41.98,-91.67,11z/data=!5m1!1e1"
     }
 ]
@@ -59,6 +59,21 @@ def get_active_alerts(lat, lon):
         return ", ".join(alert_names)
     except Exception as e:
         return f"Alert check failed ({str(e)})"
+
+def get_current_temperature(station_id):
+    """Fetches the latest actual thermometer reading from the weather station."""
+    try:
+        obs_url = f"https://api.weather.gov/stations/{station_id}/observations/latest"
+        resp = requests.get(obs_url, headers=headers).json()
+        temp_c = resp.get('properties', {}).get('temperature', {}).get('value')
+        
+        if temp_c is not None:
+            # Convert Celsius to Fahrenheit and round it
+            temp_f = round((temp_c * 9/5) + 32)
+            return f"{temp_f}°F"
+    except Exception:
+        pass
+    return "N/A"
 
 def create_weather_file():
     filename = "Weather_Report.html"
@@ -89,30 +104,33 @@ def create_weather_file():
     <hr style="border: 0; border-top: 1px solid #ddd; margin-bottom: 20px;">
 """
 
-    print("Fetching weather and alerts... please wait[cite: 1].")
+    print("Fetching weather, current temps, and alerts... please wait[cite: 1].")
 
     for loc in locations:
         try:
-            # 1. Get the forecast
+            # 1. Get the forecast text
             point_url = f"https://api.weather.gov/points/{loc['lat']},{loc['lon']}"
             point_resp = requests.get(point_url, headers=headers).json()
             forecast_url = point_resp['properties']['forecast']
             forecast_resp = requests.get(forecast_url, headers=headers).json()
-            current = forecast_resp['properties']['periods'][0]
+            current_forecast = forecast_resp['properties']['periods'][0]
             
-            # 2. Get the alerts
+            # 2. Get the actual live current temperature from the station
+            live_temp = get_current_temperature(loc['station'])
+
+            # 3. Get active alerts
             active_alerts = get_active_alerts(loc['lat'], loc['lon'])
             
             # Alert styling logic
             alert_class = "alert-text" if active_alerts != "None" else ""
 
-            # 3. Build HTML block for the city
+            # 4. Build HTML block for the city
             report_content += f"""
     <div class="city-block">
         <div class="city-name">{loc['city']}</div>
         <div><strong>Alerts:</strong> <span class="{alert_class}">{active_alerts}</span></div>
-        <div><strong>Temp:</strong> {current['temperature']}°{current['temperatureUnit']}</div>
-        <div><strong>Forecast:</strong> {current['detailedForecast']}</div>
+        <div><strong>Current Temp:</strong> {live_temp}</div>
+        <div><strong>Forecast:</strong> {current_forecast['detailedForecast']}</div>
         <div style="margin-top: 10px;"><a href="{loc['map_link']}" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline; font-size: 1.05em;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 """
@@ -138,11 +156,9 @@ def create_weather_file():
     
     print(f"Success! Report saved locally as '{filename}'.")
     
-    # Safely try to open the file automatically (Windows desktops only)
     try:
         os.startfile(filename)
     except AttributeError:
-        # Runs on servers, cloud actions, or non-Windows machines without throwing an error
         print("Auto-open skipped (running in a non-Windows or server environment).")
 
 if __name__ == "__main__":
