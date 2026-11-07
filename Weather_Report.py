@@ -60,20 +60,27 @@ def get_active_alerts(lat, lon):
     except Exception as e:
         return f"Alert check failed ({str(e)})"
 
-def get_current_temperature(station_id):
-    """Fetches the latest actual thermometer reading from the weather station."""
+def get_current_conditions(station_id):
+    """Fetches the latest actual thermometer reading and text condition from the weather station."""
     try:
         obs_url = f"https://api.weather.gov/stations/{station_id}/observations/latest"
         resp = requests.get(obs_url, headers=headers).json()
-        temp_c = resp.get('properties', {}).get('temperature', {}).get('value')
+        props = resp.get('properties', {})
         
+        # Get temperature
+        temp_c = props.get('temperature', {}).get('value')
+        temp_str = "N/A"
         if temp_c is not None:
-            # Convert Celsius to Fahrenheit and round it
             temp_f = round((temp_c * 9/5) + 32)
-            return f"{temp_f}°F"
+            temp_str = f"{temp_f}°F"
+            
+        # Get text condition (e.g. "Fog", "Overcast", "Clear")
+        text_description = props.get('textDescription', 'Conditions unavailable')
+        
+        return temp_str, text_description
     except Exception:
         pass
-    return "N/A"
+    return "N/A", "Conditions unavailable"
 
 def create_weather_file():
     filename = "Weather_Report.html"
@@ -104,19 +111,19 @@ def create_weather_file():
     <hr style="border: 0; border-top: 1px solid #ddd; margin-bottom: 20px;">
 """
 
-    print("Fetching weather, current temps, and alerts... please wait[cite: 1].")
+    print("Fetching weather, current conditions, and alerts... please wait[cite: 1].")
 
     for loc in locations:
         try:
-            # 1. Get the forecast text
+            # 1. Get the forecast text (for upcoming forecast details)
             point_url = f"https://api.weather.gov/points/{loc['lat']},{loc['lon']}"
             point_resp = requests.get(point_url, headers=headers).json()
             forecast_url = point_resp['properties']['forecast']
             forecast_resp = requests.get(forecast_url, headers=headers).json()
             current_forecast = forecast_resp['properties']['periods'][0]
             
-            # 2. Get the actual live current temperature from the station
-            live_temp = get_current_temperature(loc['station'])
+            # 2. Get the actual live current temperature and current weather description from the station
+            live_temp, live_condition = get_current_conditions(loc['station'])
 
             # 3. Get active alerts
             active_alerts = get_active_alerts(loc['lat'], loc['lon'])
@@ -129,7 +136,7 @@ def create_weather_file():
     <div class="city-block">
         <div class="city-name">{loc['city']}</div>
         <div><strong>Alerts:</strong> <span class="{alert_class}">{active_alerts}</span></div>
-        <div><strong>Current Temp:</strong> {live_temp}</div>
+        <div><strong>Current Temp:</strong> {live_temp} ({live_condition})</div>
         <div><strong>Forecast:</strong> {current_forecast['detailedForecast']}</div>
         <div style="margin-top: 10px;"><a href="{loc['map_link']}" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline; font-size: 1.05em;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
