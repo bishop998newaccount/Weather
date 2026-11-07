@@ -1,0 +1,23 @@
+name: Test Run Script
+
+on:
+  workflow_dispatch: # This lets you click a button to run it manually
+
+jobs:
+  run-script:
+  # Using an Ubuntu cloud runner which has Python pre-installed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run weather script
+        run: python 22.py
