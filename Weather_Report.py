@@ -3,91 +3,64 @@ import time
 import os
 from datetime import datetime
 
-# Your list of cities updated with direct map links and NWS station IDs for current observations
+# Streamlined list of locations
 locations = [
-    {
-        "city": "Marquette, MI", "lat": 46.54, "lon": -87.40, "station": "KMQT",
-        "map_link": "https://www.google.com/maps/@46.54,-87.40,11z/data=!5m1!1e1"
-    },
-    {
-        "city": "Gaylord, MI", "lat": 45.03, "lon": -84.68, "station": "KGLR",
-        "map_link": "https://www.google.com/maps/@45.03,-84.68,11z/data=!5m1!1e1"
-    },
-    {
-        "city": "Grand Rapids, MI", "lat": 42.96, "lon": -85.67, "station": "KGRR",
-        "map_link": "https://www.google.com/maps/@42.96,-85.67,11z/data=!5m1!1e1"
-    },
-    {
-        "city": "Cass City, MI", "lat": 43.60, "lon": -83.17, "station": "KBAX",
-        "map_link": "https://www.google.com/maps/@43.60,-83.17,11z/data=!5m1!1e1"
-    },
-    {
-        "city": "Lansing, MI", "lat": 42.73, "lon": -84.55, "station": "KLAN",
-        "map_link": "https://www.google.com/maps/@42.73,-84.55,11z/data=!5m1!1e1"
-    },
-    {
-        "city": "Benton Harbor, MI", "lat": 42.12, "lon": -86.45, "station": "KBEH",
-        "map_link": "https://www.google.com/maps/@42.12,-86.45,11z/data=!5m1!1e1"
-    },
-    {
-        "city": "Detroit, MI", "lat": 42.33, "lon": -83.05, "station": "KDTW",
-        "map_link": "https://www.google.com/maps/@42.33,-83.05,11z/data=!5m1!1e1"
-    },
-    {
-        "city": "Des Moines, IA", "lat": 41.59, "lon": -93.60, "station": "KDSM",
-        "map_link": "https://www.google.com/maps/@41.59,-93.60,11z/data=!5m1!1e1"
-    },
-    {
-        "city": "Cedar Rapids, IA", "lat": 41.98, "lon": -91.67, "station": "KCID",
-        "map_link": "https://www.google.com/maps/@41.98,-91.67,11z/data=!5m1!1e1"
-    }
+    {"city": "Marquette, MI", "lat": 46.54, "lon": -87.40, "station": "KMQT"},
+    {"city": "Gaylord, MI", "lat": 45.03, "lon": -84.68, "station": "KGLR"},
+    {"city": "Grand Rapids, MI", "lat": 42.96, "lon": -85.67, "station": "KGRR"},
+    {"city": "Cass City, MI", "lat": 43.60, "lon": -83.17, "station": "KBAX"},
+    {"city": "Lansing, MI", "lat": 42.73, "lon": -84.55, "station": "KLAN"},
+    {"city": "Benton Harbor, MI", "lat": 42.12, "lon": -86.45, "station": "KBEH"},
+    {"city": "Detroit, MI", "lat": 42.33, "lon": -83.05, "station": "KDTW"},
+    {"city": "Des Moines, IA", "lat": 41.59, "lon": -93.60, "station": "KDSM"},
+    {"city": "Cedar Rapids, IA", "lat": 41.98, "lon": -91.67, "station": "KCID"}
 ]
 
-headers = {'User-Agent': '(my-weather-app, contact@example.com)'}
+HEADERS = {'User-Agent': '(my-weather-app, contact@example.com)'}
 
-def get_active_alerts(lat, lon):
-    """Checks for active NWS alerts at specific coordinates[cite: 1]."""
+def fetch_json(url):
+    """Helper function to safely fetch JSON data from APIs."""
     try:
-        alert_url = f"https://api.weather.gov/alerts/active?point={lat},{lon}"
-        resp = requests.get(alert_url, headers=headers).json()
-        features = resp.get('features', [])
-        
-        if not features:
-            return "None"
-        
-        alert_names = list(set([f['properties']['event'] for f in features]))
-        return ", ".join(alert_names)
-    except Exception as e:
-        return f"Alert check failed ({str(e)})"
-
-def get_current_conditions(station_id):
-    """Fetches the latest actual thermometer reading and text condition from the weather station."""
-    try:
-        obs_url = f"https://api.weather.gov/stations/{station_id}/observations/latest"
-        resp = requests.get(obs_url, headers=headers).json()
-        props = resp.get('properties', {})
-        
-        # Get temperature
-        temp_c = props.get('temperature', {}).get('value')
-        temp_str = "N/A"
-        if temp_c is not None:
-            temp_f = round((temp_c * 9/5) + 32)
-            temp_str = f"{temp_f}°F"
-            
-        # Get text condition (e.g. "Fog", "Overcast", "Clear")
-        text_description = props.get('textDescription', 'Conditions unavailable')
-        
-        return temp_str, text_description
+        resp = requests.get(url, headers=HEADERS, timeout=10)
+        if resp.status_code == 200:
+            return resp.json()
     except Exception:
         pass
-    return "N/A", "Conditions unavailable"
+    return None
+
+def get_weather_data(lat, lon, station_id):
+    """Fetches alerts, live conditions, and forecast in an optimized way."""
+    # 1. Get active alerts
+    alerts_data = fetch_json(f"https://api.weather.gov/alerts/active?point={lat},{lon}")
+    features = alerts_data.get('features', []) if alerts_data else []
+    alerts = ", ".join(set([f['properties']['event'] for f in features])) if features else "None"
+
+    # 2. Get live station temperature and conditions
+    obs_data = fetch_json(f"https://api.weather.gov/stations/{station_id}/observations/latest")
+    props = obs_data.get('properties', {}) if obs_data else {}
+    
+    temp_c = props.get('temperature', {}).get('value')
+    temp_str = f"{round((temp_c * 9/5) + 32)}°F" if temp_c is not None else "N/A"
+    condition = props.get('textDescription', 'Unavailable')
+
+    # 3. Get forecast text via points grid
+    point_data = fetch_json(f"https://api.weather.gov/points/{lat},{lon}")
+    forecast_text = "Forecast unavailable"
+    if point_data:
+        forecast_url = point_data.get('properties', {}).get('forecast')
+        forecast_data = fetch_json(forecast_url)
+        if forecast_data:
+            periods = forecast_data.get('properties', {}).get('periods', [])
+            if periods:
+                forecast_text = periods[0].get('detailedForecast', '')
+
+    return alerts, temp_str, condition, forecast_text
 
 def create_weather_file():
     filename = "Weather_Report.html"
     date_str = datetime.now().strftime("%A, %B %d, %Y")
     
-    # HTML Header and basic styling
-    report_content = f"""<!DOCTYPE html>
+    html = f"""<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -99,8 +72,6 @@ def create_weather_file():
         .city-block {{ margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }}
         .city-name {{ font-size: 1.25em; font-weight: bold; color: #2980b9; margin-bottom: 5px; }}
         .alert-text {{ color: #c0392b; font-weight: bold; }}
-        .link-btn {{ display: inline-block; margin-top: 8px; padding: 6px 12px; background-color: #2980b9; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em; }}
-        .link-btn:hover {{ background-color: #1a5276; }}
         .error {{ color: #e74c3c; }}
     </style>
 </head>
@@ -111,66 +82,35 @@ def create_weather_file():
     <hr style="border: 0; border-top: 1px solid #ddd; margin-bottom: 20px;">
 """
 
-    print("Fetching weather, current conditions, and alerts... please wait[cite: 1].")
+    print("Fetching weather reports... please wait.")
 
     for loc in locations:
-        try:
-            # 1. Get the forecast text (for upcoming forecast details)
-            point_url = f"https://api.weather.gov/points/{loc['lat']},{loc['lon']}"
-            point_resp = requests.get(point_url, headers=headers).json()
-            forecast_url = point_resp['properties']['forecast']
-            forecast_resp = requests.get(forecast_url, headers=headers).json()
-            current_forecast = forecast_resp['properties']['periods'][0]
-            
-            # 2. Get the actual live current temperature and current weather description from the station
-            live_temp, live_condition = get_current_conditions(loc['station'])
+        alerts, temp, condition, forecast = get_weather_data(loc['lat'], loc['lon'], loc['station'])
+        alert_class = "alert-text" if alerts != "None" else ""
+        map_link = f"https://www.google.com/maps/@{loc['lat']},{loc['lon']},11z/data=!5m1!1e1"
 
-            # 3. Get active alerts
-            active_alerts = get_active_alerts(loc['lat'], loc['lon'])
-            
-            # Alert styling logic
-            alert_class = "alert-text" if active_alerts != "None" else ""
-
-            # 4. Build HTML block for the city
-            report_content += f"""
+        html += f"""
     <div class="city-block">
         <div class="city-name">{loc['city']}</div>
-        <div><strong>Alerts:</strong> <span class="{alert_class}">{active_alerts}</span></div>
-        <div><strong>Current Temp:</strong> {live_temp} ({live_condition})</div>
-        <div><strong>Forecast:</strong> {current_forecast['detailedForecast']}</div>
-        <div style="margin-top: 10px;"><a href="{loc['map_link']}" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline; font-size: 1.05em;">🗺️ Click here for Live Traffic Map</a></div>
+        <div><strong>Alerts:</strong> <span class="{alert_class}">{alerts}</span></div>
+        <div><strong>Current Temp:</strong> {temp} ({condition})</div>
+        <div><strong>Forecast:</strong> {forecast}</div>
+        <div style="margin-top: 10px;"><a href="{map_link}" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 """
-            time.sleep(0.7) 
-        except Exception as e:
-            print(f"Error processing {loc['city']}: {e}")
-            report_content += f"""
-    <div class="city-block">
-        <div class="city-name">{loc['city']}</div>
-        <div class="error">Error retrieving data for this location: {str(e)}</div>
-    </div>
-"""
+        time.sleep(0.5)
 
-    report_content += """
-</div>
-</body>
-</html>
-"""
+    html += "\n</div>\n</body>\n</html>"
 
-    # Write the file securely with UTF-8 encoding
     with open(filename, "w", encoding="utf-8") as f:
-        f.write(report_content)
+        f.write(html)
     
     print(f"Success! Report saved locally as '{filename}'.")
     
     try:
         os.startfile(filename)
     except AttributeError:
-        print("Auto-open skipped (running in a non-Windows or server environment).")
+        pass
 
 if __name__ == "__main__":
-    try:
-        create_weather_file()
-    except Exception as e:
-        print(f"\nCRITICAL ERROR: The script failed to complete execution.")
-        print(f"Error Details: {e}")
+    create_weather_file()
