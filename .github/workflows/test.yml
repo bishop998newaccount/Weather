@@ -20,4 +20,4 @@ jobs:
         run: pip install requests
 
       - name: Run weather script
-        run: python 22.py
+        run: python3 22.py
