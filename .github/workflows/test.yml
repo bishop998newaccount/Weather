@@ -1,15 +1,15 @@
 name: Generate Daily Weather Report
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Keeps the manual run button
   schedule:
-    - cron: '0 11 * * *' # Runs daily at 11:00 AM UTC (6:00 AM Eastern Time)
+    - cron: '0 11 * * *' # Runs automatically every day at 11:00 AM UTC (6:00 AM EST)
 
 jobs:
   build-report:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # Gives permission to save the HTML file back to the repo
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
