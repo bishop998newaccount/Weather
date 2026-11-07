@@ -14,11 +14,6 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Set System Timezone
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: "America/Detroit"
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -28,6 +23,8 @@ jobs:
         run: pip install requests
 
       - name: Run weather script
+        env:
+          TZ: "America/Detroit"
         run: python3 Weather_Report.py
 
       - name: Commit and push updated report
