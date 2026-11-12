@@ -5,17 +5,20 @@ from datetime import datetime
 
 # Streamlined list of locations
 locations = [
-    {"city": "Marquette, MI", "lat": 46.54, "lon": -87.40, "station": "KMQT"},
+    {"city": "Marquette, MI", "lat": 46.54, "lon": -87.40, "station": "KESC"},
+    {"city": "St. Ignace, MI", "lat": 45.86, "lon": -84.74, "station": "KMCD"},
     {"city": "Gaylord, MI", "lat": 45.03, "lon": -84.68, "station": "KGLR"},
-    {"city": "Grand Rapids, MI", "lat": 42.96, "lon": -85.67, "station": "KGRR"},
+    {"city": "Ludington, MI", "lat": 43.98, "lon": -86.47, "station": "KLDM"},
     {"city": "Cass City, MI", "lat": 43.60, "lon": -83.17, "station": "KBAX"},
+    {"city": "Grand Rapids, MI", "lat": 42.96, "lon": -85.67, "station": "KGRR"},
     {"city": "Lansing, MI", "lat": 42.73, "lon": -84.55, "station": "KLAN"},
-    {"city": "Benton Harbor, MI", "lat": 42.12, "lon": -86.45, "station": "KBEH"},
     {"city": "Detroit, MI", "lat": 42.33, "lon": -83.05, "station": "KDTW"},
+    {"city": "Jackson, MI", "lat": 42.24, "lon": -84.41, "station": "KJXN"},
+    {"city": "Benton Harbor, MI", "lat": 42.12, "lon": -86.45, "station": "KBEH"},
+    {"city": "Cedar Rapids, IA", "lat": 41.98, "lon": -91.67, "station": "KCID"},
     {"city": "Des Moines, IA", "lat": 41.59, "lon": -93.60, "station": "KDSM"},
-    {"city": "Cedar Rapids, IA", "lat": 41.98, "lon": -91.67, "station": "KCID"}
+    {"city": "Neola, IA", "lat": 41.45, "lon": -95.61, "station": "KCBF"}
 ]
-
 HEADERS = {'User-Agent': '(my-weather-app, contact@example.com)'}
 
 def fetch_json(url):
