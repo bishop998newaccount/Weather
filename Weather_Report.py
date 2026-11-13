@@ -32,7 +32,7 @@ def fetch_json(url):
     return None
 
 def get_weather_data(lat, lon, station_id):
-    """Fetches alerts, live conditions, and forecast in an optimized way."""
+    """Fetches alerts, live conditions, forecast, and 12-hour outlook."""
     # 1. Get active alerts
     alerts_data = fetch_json(f"https://api.weather.gov/alerts/active?point={lat},{lon}")
     features = alerts_data.get('features', []) if alerts_data else []
@@ -46,9 +46,11 @@ def get_weather_data(lat, lon, station_id):
     temp_str = f"{round((temp_c * 9/5) + 32)}°F" if temp_c is not None else "N/A"
     condition = props.get('textDescription', 'Unavailable')
 
-    # 3. Get forecast text via points grid
+    # 3. Get forecast text and 12-hour outlook via points grid
     point_data = fetch_json(f"https://api.weather.gov/points/{lat},{lon}")
     forecast_text = "Forecast unavailable"
+    hourly_items = []
+    
     if point_data:
         forecast_url = point_data.get('properties', {}).get('forecast')
         forecast_data = fetch_json(forecast_url)
@@ -57,7 +59,35 @@ def get_weather_data(lat, lon, station_id):
             if periods:
                 forecast_text = periods[0].get('detailedForecast', '')
 
-    return alerts, temp_str, condition, forecast_text
+        hourly_url = point_data.get('properties', {}).get('forecastHourly')
+        hourly_data = fetch_json(hourly_url)
+        if hourly_data:
+            hourly_periods = hourly_data.get('properties', {}).get('periods', [])[:12]
+            for p in hourly_periods:
+                try:
+                    dt = datetime.fromisoformat(p['startTime'])
+                    time_label = dt.strftime("%I %p").lstrip("0")
+                except Exception:
+                    time_label = p.get('startTime', '')
+                
+                h_temp = f"{p.get('temperature')}°{p.get('temperatureUnit', 'F')}"
+                h_short = p.get('shortForecast', '')
+                
+                precip_val = p.get('probabilityOfPrecipitation', {}).get('value')
+                if precip_val and precip_val > 0:
+                    precip_str = f", {precip_val}% chance"
+                else:
+                    precip_str = ""
+                
+                wind_dir = p.get('windDirection', '')
+                wind_spd = p.get('windSpeed', '')
+                wind_str = f"Wind: {wind_dir} {wind_spd}".strip()
+                
+                hourly_items.append(
+                    f"<strong>{time_label}:</strong> {h_temp} | {h_short}{precip_str} ({wind_str})"
+                )
+
+    return alerts, temp_str, condition, forecast_text, hourly_items
 
 def create_weather_file():
     filename = "Weather_Report.html"
@@ -75,8 +105,25 @@ def create_weather_file():
         .city-block {{ margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }}
         .city-name {{ font-size: 1.25em; font-weight: bold; color: #2980b9; margin-bottom: 5px; }}
         .alert-text {{ color: #c0392b; font-weight: bold; }}
+        .links-row {{ margin-top: 10px; }}
+        .links-row a {{ color: #2980b9; font-weight: bold; text-decoration: underline; cursor: pointer; }}
+        .hourly-box {{ display: none; margin-top: 12px; padding: 12px 15px; background-color: #f4f8fb; border-left: 4px solid #2980b9; border-radius: 4px; }}
+        .hourly-list {{ margin: 6px 0 0 20px; padding: 0; }}
+        .hourly-list li {{ margin-bottom: 4px; }}
         .error {{ color: #e74c3c; }}
     </style>
+    <script>
+        function toggleHourly(id, linkEl) {{
+            var box = document.getElementById(id);
+            if (box.style.display === "none" || box.style.display === "") {{
+                box.style.display = "block";
+                linkEl.textContent = "🕒 Hide 12-Hour Weather";
+            }} else {{
+                box.style.display = "none";
+                linkEl.textContent = "🕒 Click here for 12-Hour Weather";
+            }}
+        }}
+    </script>
 </head>
 <body>
 <div class="container">
@@ -87,10 +134,27 @@ def create_weather_file():
 
     print("Fetching weather reports... please wait.")
 
-    for loc in locations:
-        alerts, temp, condition, forecast = get_weather_data(loc['lat'], loc['lon'], loc['station'])
+    for idx, loc in enumerate(locations):
+        alerts, temp, condition, forecast, hourly_items = get_weather_data(
+            loc['lat'], loc['lon'], loc['station']
+        )
         alert_class = "alert-text" if alerts != "None" else ""
         map_link = f"https://www.google.com/maps/@{loc['lat']},{loc['lon']},11z/data=!5m1!1e1"
+
+        hourly_link_html = ""
+        hourly_box_html = ""
+        if hourly_items:
+            box_id = f"hourly-{idx}"
+            sep = "\n                "
+            list_items = sep.join([f"<li>{item}</li>" for item in hourly_items])
+            hourly_link_html = f' &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly(\'{box_id}\', this)">🕒 Click here for 12-Hour Weather</a>'
+            hourly_box_html = f"""
+        <div id="{box_id}" class="hourly-box">
+            <strong>12-Hour Hourly Outlook:</strong>
+            <ul class="hourly-list">
+                {list_items}
+            </ul>
+        </div>"""
 
         html += f"""
     <div class="city-block">
@@ -98,7 +162,7 @@ def create_weather_file():
         <div><strong>Alerts:</strong> <span class="{alert_class}">{alerts}</span></div>
         <div><strong>Current Temp:</strong> {temp} ({condition})</div>
         <div><strong>Forecast:</strong> {forecast}</div>
-        <div style="margin-top: 10px;"><a href="{map_link}" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
+        <div class="links-row"><a href="{map_link}" target="_blank">🗺️ Click here for Live Traffic Map</a>{hourly_link_html}</div>{hourly_box_html}
     </div>
 """
         time.sleep(0.5)
