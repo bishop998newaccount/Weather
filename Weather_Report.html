@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Weather & Road Report - Wednesday, November 18, 2026</title>
+    <title>Weather & Road Report - Tuesday, November 17, 2026</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 30px; background-color: #f9f9f9; color: #333; }
         .container { max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -10,355 +10,117 @@
         .city-block { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
         .city-name { font-size: 1.25em; font-weight: bold; color: #2980b9; margin-bottom: 5px; }
         .alert-text { color: #c0392b; font-weight: bold; }
-        .links-row { margin-top: 10px; }
-        .links-row a { color: #2980b9; font-weight: bold; text-decoration: underline; cursor: pointer; }
-        .hourly-box { display: none; margin-top: 12px; padding: 12px 15px; background-color: #f4f8fb; border-left: 4px solid #2980b9; border-radius: 4px; }
-        .hourly-list { margin: 6px 0 0 20px; padding: 0; }
-        .hourly-list li { margin-bottom: 4px; }
         .error { color: #e74c3c; }
     </style>
-    <script>
-        function toggleHourly(id, linkEl) {
-            var box = document.getElementById(id);
-            if (box.style.display === "none" || box.style.display === "") {
-                box.style.display = "block";
-                linkEl.textContent = "🕒 Hide 12-Hour Weather";
-            } else {
-                box.style.display = "none";
-                linkEl.textContent = "🕒 Click here for 12-Hour Weather";
-            }
-        }
-    </script>
 </head>
 <body>
 <div class="container">
     <h1>Weather & Road Report</h1>
-    <p><strong>Date:</strong> Wednesday, November 18, 2026</p>
+    <p><strong>Date:</strong> Tuesday, November 17, 2026</p>
     <hr style="border: 0; border-top: 1px solid #ddd; margin-bottom: 20px;">
 
     <div class="city-block">
         <div class="city-name">Marquette, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 50°F ()</div>
-        <div><strong>Forecast:</strong> Partly cloudy. Low around 40, with temperatures rising to around 43 overnight. South wind 10 to 15 mph, with gusts as high as 25 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@46.54,-87.4,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-0', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-0" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 50°F | Mostly Clear, 1% chance (Wind: S 10 mph)</li>
-                <li><strong>10 PM:</strong> 49°F | Mostly Clear, 1% chance (Wind: S 10 mph)</li>
-                <li><strong>11 PM:</strong> 48°F | Mostly Clear, 1% chance (Wind: S 10 mph)</li>
-                <li><strong>12 AM:</strong> 48°F | Partly Cloudy, 1% chance (Wind: SW 10 mph)</li>
-                <li><strong>1 AM:</strong> 47°F | Partly Cloudy, 1% chance (Wind: SW 10 mph)</li>
-                <li><strong>2 AM:</strong> 45°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>3 AM:</strong> 44°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>4 AM:</strong> 44°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>5 AM:</strong> 43°F | Partly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>6 AM:</strong> 42°F | Mostly Sunny (Wind: SW 15 mph)</li>
-                <li><strong>7 AM:</strong> 41°F | Mostly Sunny (Wind: S 15 mph)</li>
-                <li><strong>8 AM:</strong> 42°F | Mostly Sunny (Wind: S 15 mph)</li>
-            </ul>
-        </div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 50°F (Clear)</div>
+        <div><strong>Forecast:</strong> Partly cloudy. Low around 40, with temperatures rising to around 43 overnight. Southwest wind 10 to 15 mph, with gusts as high as 25 mph.</div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@46.54,-87.4,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">St. Ignace, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 50°F ()</div>
-        <div><strong>Forecast:</strong> Mostly cloudy, with a low around 46. Southwest wind 10 to 15 mph, with gusts as high as 30 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@45.86,-84.74,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-1', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-1" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 48°F | Partly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>10 PM:</strong> 47°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>11 PM:</strong> 46°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>12 AM:</strong> 46°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>1 AM:</strong> 46°F | Partly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>2 AM:</strong> 46°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>3 AM:</strong> 47°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>4 AM:</strong> 46°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>5 AM:</strong> 46°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>6 AM:</strong> 46°F | Partly Sunny (Wind: SW 15 mph)</li>
-                <li><strong>7 AM:</strong> 46°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>8 AM:</strong> 47°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-            </ul>
-        </div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 50°F (Clear)</div>
+        <div><strong>Forecast:</strong> Partly cloudy, with a low around 46. Southwest wind 10 to 15 mph.</div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@45.86,-84.74,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Gaylord, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 46°F (Clear)</div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 45°F (Clear)</div>
         <div><strong>Forecast:</strong> Mostly cloudy, with a low around 40. Southwest wind 10 to 15 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@45.03,-84.68,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-2', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-2" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 45°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>10 PM:</strong> 43°F | Mostly Cloudy (Wind: SW 15 mph)</li>
-                <li><strong>11 PM:</strong> 42°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>12 AM:</strong> 41°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>1 AM:</strong> 41°F | Partly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>2 AM:</strong> 41°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>3 AM:</strong> 41°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>4 AM:</strong> 41°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>5 AM:</strong> 40°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>6 AM:</strong> 41°F | Partly Sunny (Wind: SW 10 mph)</li>
-                <li><strong>7 AM:</strong> 41°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-                <li><strong>8 AM:</strong> 42°F | Mostly Cloudy (Wind: SW 10 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@45.03,-84.68,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Ludington, MI</div>
-        <div><strong>Alerts:</strong> <span class="alert-text">Small Craft Advisory</span></div>
-        <div><strong>Current Temp:</strong> 45°F ()</div>
+        <div><strong>Alerts:</strong> <span style="color: #c0392b; font-weight: bold;">Small Craft Advisory</span></div>
+        <div><strong>Current Temp:</strong> 45°F (Clear)</div>
         <div><strong>Forecast:</strong> Partly cloudy. Low around 49, with temperatures rising to around 51 overnight. South southwest wind around 20 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@43.98,-86.47,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-3', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-3" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 50°F | Mostly Cloudy (Wind: S 17 mph)</li>
-                <li><strong>10 PM:</strong> 50°F | Mostly Cloudy (Wind: SSW 17 mph)</li>
-                <li><strong>11 PM:</strong> 51°F | Mostly Cloudy (Wind: SSW 18 mph)</li>
-                <li><strong>12 AM:</strong> 51°F | Mostly Cloudy (Wind: SSW 18 mph)</li>
-                <li><strong>1 AM:</strong> 51°F | Partly Cloudy (Wind: SSW 18 mph)</li>
-                <li><strong>2 AM:</strong> 51°F | Partly Cloudy (Wind: SSW 20 mph)</li>
-                <li><strong>3 AM:</strong> 51°F | Partly Cloudy (Wind: SSW 20 mph)</li>
-                <li><strong>4 AM:</strong> 51°F | Partly Cloudy (Wind: SSW 20 mph)</li>
-                <li><strong>5 AM:</strong> 51°F | Partly Cloudy (Wind: SSW 20 mph)</li>
-                <li><strong>6 AM:</strong> 50°F | Mostly Sunny (Wind: SSW 20 mph)</li>
-                <li><strong>7 AM:</strong> 50°F | Mostly Sunny (Wind: SSW 18 mph)</li>
-                <li><strong>8 AM:</strong> 49°F | Mostly Sunny (Wind: SSW 20 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@43.98,-86.47,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Cass City, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
         <div><strong>Current Temp:</strong> 41°F (Mostly Cloudy)</div>
-        <div><strong>Forecast:</strong> Partly cloudy, with a low around 35. Southwest wind around 8 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@43.6,-83.17,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-4', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-4" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 41°F | Partly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>10 PM:</strong> 40°F | Partly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>11 PM:</strong> 40°F | Mostly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>12 AM:</strong> 39°F | Mostly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>1 AM:</strong> 39°F | Mostly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>2 AM:</strong> 38°F | Mostly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>3 AM:</strong> 38°F | Partly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>4 AM:</strong> 37°F | Partly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>5 AM:</strong> 36°F | Partly Cloudy (Wind: SW 6 mph)</li>
-                <li><strong>6 AM:</strong> 36°F | Partly Sunny (Wind: SW 6 mph)</li>
-                <li><strong>7 AM:</strong> 35°F | Patchy Fog (Wind: SW 6 mph)</li>
-                <li><strong>8 AM:</strong> 36°F | Patchy Fog (Wind: SSW 6 mph)</li>
-            </ul>
-        </div>
+        <div><strong>Forecast:</strong> Mostly cloudy, with a low around 35. Southwest wind around 6 mph.</div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@43.6,-83.17,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Grand Rapids, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 39°F (Clear)</div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 41°F (Clear)</div>
         <div><strong>Forecast:</strong> Partly cloudy, with a low around 38. South wind around 5 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@42.96,-85.67,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-5', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-5" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 41°F | Partly Cloudy (Wind: S 3 mph)</li>
-                <li><strong>10 PM:</strong> 40°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>11 PM:</strong> 40°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>12 AM:</strong> 40°F | Partly Cloudy (Wind: S 3 mph)</li>
-                <li><strong>1 AM:</strong> 39°F | Partly Cloudy (Wind: S 3 mph)</li>
-                <li><strong>2 AM:</strong> 39°F | Partly Cloudy (Wind: S 3 mph)</li>
-                <li><strong>3 AM:</strong> 39°F | Partly Cloudy (Wind: S 3 mph)</li>
-                <li><strong>4 AM:</strong> 39°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>5 AM:</strong> 38°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>6 AM:</strong> 38°F | Sunny (Wind: S 5 mph)</li>
-                <li><strong>7 AM:</strong> 38°F | Sunny (Wind: S 5 mph)</li>
-                <li><strong>8 AM:</strong> 39°F | Sunny (Wind: S 5 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@42.96,-85.67,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Lansing, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
         <div><strong>Current Temp:</strong> 43°F (Clear)</div>
         <div><strong>Forecast:</strong> Partly cloudy, with a low around 37. South southwest wind around 5 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@42.73,-84.55,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-6', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-6" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 41°F | Partly Cloudy (Wind: SSW 3 mph)</li>
-                <li><strong>10 PM:</strong> 40°F | Partly Cloudy (Wind: SSW 5 mph)</li>
-                <li><strong>11 PM:</strong> 39°F | Mostly Cloudy (Wind: SSW 5 mph)</li>
-                <li><strong>12 AM:</strong> 39°F | Partly Cloudy (Wind: SSW 5 mph)</li>
-                <li><strong>1 AM:</strong> 39°F | Partly Cloudy (Wind: SSW 5 mph)</li>
-                <li><strong>2 AM:</strong> 39°F | Partly Cloudy (Wind: SSW 5 mph)</li>
-                <li><strong>3 AM:</strong> 39°F | Partly Cloudy (Wind: SSW 5 mph)</li>
-                <li><strong>4 AM:</strong> 39°F | Partly Cloudy (Wind: SSW 5 mph)</li>
-                <li><strong>5 AM:</strong> 38°F | Partly Cloudy (Wind: SSW 5 mph)</li>
-                <li><strong>6 AM:</strong> 38°F | Mostly Sunny (Wind: SSW 5 mph)</li>
-                <li><strong>7 AM:</strong> 37°F | Mostly Sunny (Wind: SSW 5 mph)</li>
-                <li><strong>8 AM:</strong> 38°F | Sunny (Wind: SSW 6 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@42.73,-84.55,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Detroit, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
         <div><strong>Current Temp:</strong> 43°F (Clear)</div>
         <div><strong>Forecast:</strong> Patchy fog after 4am. Mostly clear, with a low around 37. South southwest wind around 6 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@42.33,-83.05,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-7', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-7" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 42°F | Mostly Clear (Wind: SSW 5 mph)</li>
-                <li><strong>10 PM:</strong> 42°F | Mostly Clear (Wind: SW 5 mph)</li>
-                <li><strong>11 PM:</strong> 41°F | Partly Cloudy (Wind: SW 5 mph)</li>
-                <li><strong>12 AM:</strong> 41°F | Partly Cloudy (Wind: SW 5 mph)</li>
-                <li><strong>1 AM:</strong> 40°F | Partly Cloudy (Wind: SW 5 mph)</li>
-                <li><strong>2 AM:</strong> 40°F | Partly Cloudy (Wind: SW 5 mph)</li>
-                <li><strong>3 AM:</strong> 39°F | Partly Cloudy (Wind: SW 5 mph)</li>
-                <li><strong>4 AM:</strong> 38°F | Patchy Fog (Wind: SW 5 mph)</li>
-                <li><strong>5 AM:</strong> 37°F | Patchy Fog (Wind: SW 5 mph)</li>
-                <li><strong>6 AM:</strong> 37°F | Patchy Fog (Wind: SW 5 mph)</li>
-                <li><strong>7 AM:</strong> 37°F | Mostly Sunny (Wind: SW 5 mph)</li>
-                <li><strong>8 AM:</strong> 38°F | Mostly Sunny (Wind: SW 5 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@42.33,-83.05,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Jackson, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 39°F (Clear)</div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 36°F (Clear)</div>
         <div><strong>Forecast:</strong> Partly cloudy, with a low around 36. South southwest wind around 3 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@42.24,-84.41,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-8', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-8" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 40°F | Mostly Clear (Wind: S 3 mph)</li>
-                <li><strong>10 PM:</strong> 40°F | Mostly Clear (Wind: SSW 3 mph)</li>
-                <li><strong>11 PM:</strong> 39°F | Partly Cloudy (Wind: SSW 3 mph)</li>
-                <li><strong>12 AM:</strong> 39°F | Partly Cloudy (Wind: S 3 mph)</li>
-                <li><strong>1 AM:</strong> 38°F | Partly Cloudy (Wind: SSW 3 mph)</li>
-                <li><strong>2 AM:</strong> 38°F | Partly Cloudy (Wind: SSW 3 mph)</li>
-                <li><strong>3 AM:</strong> 38°F | Partly Cloudy (Wind: SSW 3 mph)</li>
-                <li><strong>4 AM:</strong> 37°F | Mostly Clear (Wind: SSW 3 mph)</li>
-                <li><strong>5 AM:</strong> 37°F | Partly Cloudy (Wind: SSW 3 mph)</li>
-                <li><strong>6 AM:</strong> 36°F | Mostly Sunny (Wind: SSW 3 mph)</li>
-                <li><strong>7 AM:</strong> 36°F | Mostly Sunny (Wind: SSW 3 mph)</li>
-                <li><strong>8 AM:</strong> 37°F | Sunny (Wind: SSW 5 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@42.24,-84.41,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Benton Harbor, MI</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 45°F ()</div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 43°F (Clear)</div>
         <div><strong>Forecast:</strong> Partly cloudy, with a low around 37. South wind around 5 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@42.12,-86.45,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-9', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-9" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>9 PM:</strong> 42°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>10 PM:</strong> 42°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>11 PM:</strong> 42°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>12 AM:</strong> 41°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>1 AM:</strong> 41°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>2 AM:</strong> 40°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>3 AM:</strong> 40°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>4 AM:</strong> 38°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>5 AM:</strong> 37°F | Partly Cloudy (Wind: S 5 mph)</li>
-                <li><strong>6 AM:</strong> 37°F | Mostly Sunny (Wind: S 5 mph)</li>
-                <li><strong>7 AM:</strong> 37°F | Mostly Sunny (Wind: S 5 mph)</li>
-                <li><strong>8 AM:</strong> 37°F | Sunny (Wind: S 10 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@42.12,-86.45,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Cedar Rapids, IA</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 46°F ()</div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 46°F (Clear)</div>
         <div><strong>Forecast:</strong> Partly cloudy, with a low around 39. South wind around 10 mph, with gusts as high as 20 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@41.98,-91.67,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-10', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-10" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>8 PM:</strong> 46°F | Mostly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>9 PM:</strong> 45°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>10 PM:</strong> 45°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>11 PM:</strong> 44°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>12 AM:</strong> 43°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>1 AM:</strong> 42°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>2 AM:</strong> 42°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>3 AM:</strong> 41°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>4 AM:</strong> 41°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>5 AM:</strong> 40°F | Partly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>6 AM:</strong> 40°F | Mostly Sunny (Wind: S 10 mph)</li>
-                <li><strong>7 AM:</strong> 39°F | Mostly Sunny (Wind: S 10 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@41.98,-91.67,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Des Moines, IA</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 50°F ()</div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 48°F (Clear)</div>
         <div><strong>Forecast:</strong> Mostly cloudy, with a low around 43. South southeast wind 9 to 13 mph, with gusts as high as 21 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@41.59,-93.6,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-11', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-11" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>8 PM:</strong> 50°F | Mostly Cloudy (Wind: SSE 10 mph)</li>
-                <li><strong>9 PM:</strong> 49°F | Mostly Cloudy (Wind: SSE 9 mph)</li>
-                <li><strong>10 PM:</strong> 48°F | Mostly Cloudy (Wind: SSE 9 mph)</li>
-                <li><strong>11 PM:</strong> 47°F | Partly Cloudy (Wind: SSE 9 mph)</li>
-                <li><strong>12 AM:</strong> 46°F | Partly Cloudy (Wind: S 9 mph)</li>
-                <li><strong>1 AM:</strong> 46°F | Mostly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>2 AM:</strong> 46°F | Mostly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>3 AM:</strong> 44°F | Mostly Cloudy (Wind: S 10 mph)</li>
-                <li><strong>4 AM:</strong> 44°F | Partly Cloudy (Wind: S 12 mph)</li>
-                <li><strong>5 AM:</strong> 43°F | Partly Cloudy (Wind: S 13 mph)</li>
-                <li><strong>6 AM:</strong> 43°F | Mostly Sunny (Wind: S 12 mph)</li>
-                <li><strong>7 AM:</strong> 43°F | Partly Sunny (Wind: S 14 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@41.59,-93.6,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
     <div class="city-block">
         <div class="city-name">Neola, IA</div>
-        <div><strong>Alerts:</strong> <span class="">None</span></div>
-        <div><strong>Current Temp:</strong> 50°F ()</div>
+        <div><strong>Alerts:</strong> <span >None</span></div>
+        <div><strong>Current Temp:</strong> 50°F (Clear)</div>
         <div><strong>Forecast:</strong> Mostly cloudy, with a low around 43. South wind around 20 mph, with gusts as high as 29 mph.</div>
-        <div class="links-row"><a href="https://www.google.com/maps/@41.45,-95.61,11z/data=!5m1!1e1" target="_blank">🗺️ Click here for Live Traffic Map</a> &nbsp;|&nbsp; <a href="javascript:void(0);" onclick="toggleHourly('hourly-12', this)">🕒 Click here for 12-Hour Weather</a></div>
-        <div id="hourly-12" class="hourly-box">
-            <strong>12-Hour Hourly Outlook:</strong>
-            <ul class="hourly-list">
-                <li><strong>8 PM:</strong> 50°F | Mostly Cloudy (Wind: S 20 mph)</li>
-                <li><strong>9 PM:</strong> 48°F | Mostly Cloudy (Wind: S 18 mph)</li>
-                <li><strong>10 PM:</strong> 47°F | Mostly Cloudy (Wind: S 18 mph)</li>
-                <li><strong>11 PM:</strong> 47°F | Mostly Cloudy (Wind: S 18 mph)</li>
-                <li><strong>12 AM:</strong> 46°F | Mostly Cloudy (Wind: S 18 mph)</li>
-                <li><strong>1 AM:</strong> 45°F | Mostly Cloudy (Wind: S 18 mph)</li>
-                <li><strong>2 AM:</strong> 45°F | Mostly Cloudy (Wind: S 18 mph)</li>
-                <li><strong>3 AM:</strong> 44°F | Mostly Cloudy (Wind: S 18 mph)</li>
-                <li><strong>4 AM:</strong> 44°F | Mostly Cloudy (Wind: S 20 mph)</li>
-                <li><strong>5 AM:</strong> 44°F | Mostly Cloudy (Wind: S 20 mph)</li>
-                <li><strong>6 AM:</strong> 44°F | Mostly Cloudy (Wind: S 20 mph)</li>
-                <li><strong>7 AM:</strong> 43°F | Mostly Cloudy (Wind: S 22 mph)</li>
-            </ul>
-        </div>
+        <div style="margin-top: 10px;"><a href="https://www.google.com/maps/@41.45,-95.61,11z/data=!5m1!1e1" target="_blank" style="color: #2980b9; font-weight: bold; text-decoration: underline;">🗺️ Click here for Live Traffic Map</a></div>
     </div>
 
 </div>
