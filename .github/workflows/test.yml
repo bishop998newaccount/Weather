@@ -3,7 +3,8 @@ name: Generate Daily Weather Report
 on:
   workflow_dispatch: # Keeps the manual run button
   schedule:
-    - cron: '0 11 * * *' # Runs automatically every day at 11:00 AM UTC
+    - cron: '0 11 * * *' # Runs automatically every day at 11:00 AM UTC (6:00 AM EST - Winter/Standard Time)
+    - cron: '0 10 * * *' # Runs automatically every day at 10:00 AM UTC (6:00 AM EDT - Summer/Daylight Saving Time)
 
 jobs:
   build-report:
