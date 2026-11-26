@@ -61,11 +61,15 @@ def get_weather_data(lat, lon, station_id):
 
     return alerts, temp_str, condition, forecast_text
 
-def create_weather_file():
-    filename = "Weather_Report.html"
+def create_weather_reports():
+    report_filename = "Weather_Report.html"
+    index_filename = "index.html"
+    
     now_michigan = datetime.now(MICHIGAN_TZ)
     date_str = now_michigan.strftime("%A, %B %d, %Y")
+    timestamp_str = now_michigan.strftime('%A, %B %d, %Y at %I:%M %p %Z')
     
+    # 1. Build the primary Weather Report HTML
     html = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -79,10 +83,14 @@ def create_weather_file():
         .city-name {{ font-size: 1.25em; font-weight: bold; color: #2980b9; margin-bottom: 5px; }}
         .alert-text {{ color: #c0392b; font-weight: bold; }}
         .error {{ color: #e74c3c; }}
+        .nav-back {{ margin-bottom: 20px; font-size: 0.95em; }}
+        .nav-back a {{ color: #2980b9; text-decoration: none; font-weight: bold; }}
+        .nav-back a:hover {{ text-decoration: underline; }}
     </style>
 </head>
 <body>
 <div class="container">
+    <div class="nav-back"><a href="index.html">← Back to Index</a></div>
     <h1>Weather & Road Report</h1>
     <p><strong>Date:</strong> {date_str}</p>
     <hr style="border: 0; border-top: 1px solid #ddd; margin-bottom: 20px;">
@@ -93,7 +101,6 @@ def create_weather_file():
     for loc in locations:
         alerts, temp, condition, forecast = get_weather_data(loc['lat'], loc['lon'], loc['station'])
         
-        # Use inline styling so email clients preserve the red alert color when copied/pasted
         if alerts != "None":
             alert_style = 'style="color: #c0392b; font-weight: bold;"'
         else:
@@ -114,15 +121,55 @@ def create_weather_file():
 
     html += "\n</div>\n</body>\n</html>"
 
-    with open(filename, "w", encoding="utf-8") as f:
+    with open(report_filename, "w", encoding="utf-8") as f:
         f.write(html)
     
-    print(f"Success! Report saved locally as '{filename}'.")
+    print(f"Success! Report saved locally as '{report_filename}'.")
+
+    # 2. Build the Index Landing Page HTML (Ready for future file additions)
+    index_html = f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Weather & Road Reports - Index</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 30px; background-color: #f9f9f9; color: #333; }}
+        .container {{ max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }}
+        h1 {{ color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }}
+        .report-link {{ font-size: 1.2em; margin: 15px 0; }}
+        a {{ color: #2980b9; text-decoration: none; font-weight: bold; }}
+        a:hover {{ text-decoration: underline; }}
+        .timestamp {{ color: #7f8c8d; font-size: 0.9em; margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px; }}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Weather & Road Reports</h1>
+    <p>Select a report below to view current conditions, forecasts, and live traffic maps:</p>
+    <hr style="border: 0; border-top: 1px solid #ddd; margin-bottom: 20px;">
+    
+    <div class="report-link">
+        📋 <a href="{report_filename}">Primary Weather & Road Report</a>
+    </div>
+    <!-- Future regional reports will automatically be listed here -->
+
+    <div class="timestamp">
+        <strong>Last Updated:</strong> {timestamp_str}
+    </div>
+</div>
+</body>
+</html>
+"""
+
+    with open(index_filename, "w", encoding="utf-8") as f:
+        f.write(index_html)
+
+    print(f"Success! Index page saved locally as '{index_filename}'.")
     
     try:
-        os.startfile(filename)
+        os.startfile(report_filename)
     except AttributeError:
         pass
 
 if __name__ == "__main__":
-    create_weather_file()
+    create_weather_reports()
