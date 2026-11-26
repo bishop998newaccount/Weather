@@ -33,3 +33,15 @@ jobs:
           git add Weather_Report.html
           git commit -m "Auto-update weather report [skip ci]" || echo "No changes to commit"
           git push
+
+      # --- HELD BACK: GitHub Pages Deployment ---
+      # Commented out with hashtags so the runner ignores them while Pages is not ready.
+      #
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v4
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: '.'
+      # - name: Deploy to GitHub Pages
+      #   uses: actions/deploy-pages@v4
